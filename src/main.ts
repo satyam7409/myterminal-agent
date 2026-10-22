@@ -2,6 +2,9 @@ import { config } from "dotenv";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { Message } from "./types";
+import { runAgent } from "./agent/loop";
+import {tools} from "./tools/index"
+
 config({
   path: fileURLToPath(new URL(".././env", import.meta.url)),
   quiet: true,
@@ -31,16 +34,16 @@ await runAgent({
   messages,
   tools,
   onEvent(event) {
-    // if (event.type === "text") process.stdout.write(event.delta);
-    // else if (event.type == "tool_start") console.log(`\n ${event.call.name}`);
-    // else if (event.type == "tool_end") {
-    //   const lines = event.result.split("\n").length;
-    //   console.log(`\n ${event.isError ? event.result : lines}`);
-    // } else if (event.type === "turn_end") {
-    //   const { usage, stopReason } = event.message;
-    //   console.log(
-    //     `\n\n  ${provider.name} ... ${model} ... ${usage.input} ... ${usage.output} ... ${stopReason}`,
-    //   );
-    // }
+    if (event.type === "text") process.stdout.write(event.delta);
+    else if (event.type == "tool_start") console.log(`\n ${event.call.name}`);
+    else if (event.type == "tool_end") {
+      const lines = event.result.split("\n").length;
+      console.log(`\n ${event.isError ? event.result : lines}`);
+    } else if (event.type === "turn_end") {
+      const { usage, stopReason } = event.message;
+      console.log(
+        `\n\n  ${provider.name} ... ${model} ... ${usage.input} ... ${usage.output} ... ${stopReason}`,
+      );
+    }
   },
 });
