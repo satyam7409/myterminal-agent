@@ -4,6 +4,7 @@ import { parseArgs } from "node:util";
 import { Message } from "./types";
 import { runAgent } from "./agent/loop";
 import {tools} from "./tools/index"
+import { getProvider } from "./providers";
 
 config({
   path: fileURLToPath(new URL(".././env", import.meta.url)),

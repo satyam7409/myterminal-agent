@@ -32,7 +32,6 @@ function toOpenAI(messages: Message[]): OpenAI.ChatCompletionMessageParam[] {
 
 export function openAI(
   name: string,
-  baseURL: string,
   apiKey: string | undefined,
   defaultModel: string,
 ): Provider {
